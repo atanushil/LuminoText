@@ -9,7 +9,8 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar title="TextUtils" about="About us"/>
+      {/* <NavBar/> */}
       <h1 class="text-3xl font-bold underline">Hello world!</h1>
       <h1>To Do List for {formatDate(today)}</h1>
     </div>
