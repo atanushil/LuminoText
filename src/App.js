@@ -1,18 +1,12 @@
 import "./App.css";
 import NavBar from "./components/NavBar";
+import TextForm from "./components/TextForm";
 function App() {
-  const today = new Date();
-
-  function formatDate(date) {
-    return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date);
-  }
-
+  
   return (
     <div className="App">
       <NavBar title="TextUtils" about="About us"/>
-      {/* <NavBar/> */}
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
-      <h1>To Do List for {formatDate(today)}</h1>
+      <TextForm heading="Enter the text to analyze"/>
     </div>
   );
 }
