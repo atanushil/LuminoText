@@ -63,4 +63,4 @@ In this template:
 - **License**: Mention the open-source license under which the project is distributed.
 - **Acknowledgements**: A section to acknowledge contributors or any other relevant acknowledgements.
 
-  ---
+---
