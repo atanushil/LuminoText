@@ -89,7 +89,7 @@ export default function TextForm(props) {
     setText(newText);
   };
 
-  const wordCount = text.trim().split(/\s+/).length;
+  const wordCount = text.trim().split(/\s+/).filter((element)=>{return element.length!==0}).length;
   const charCount = text.length;
 
   return (
