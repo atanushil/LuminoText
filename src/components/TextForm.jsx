@@ -41,20 +41,45 @@ export default function TextForm(props) {
   };
 
   const handleCopyClick = () => {
-    if (defaultText === text|| text ==="") {
+    if (defaultText === text || text === "") {
       alert("Write something!!");
       return;
     }
-    navigator.clipboard.writeText(text).then(
-      () => {
-        alert("Text copied to clipboard!");
-      },
-      (err) => {
+  
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(
+        () => {
+          alert("Text copied to clipboard!");
+        },
+        (err) => {
+          console.error("Failed to copy text: ", err);
+          alert("Failed to copy text!");
+        }
+      );
+    } else {
+      // Fallback for browsers that do not support Clipboard API
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed"; // Avoid scrolling to bottom of the page in Edge.
+      textArea.style.opacity = 0; // Hide the textarea
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          alert("Text copied to clipboard!");
+        } else {
+          alert("Failed to copy text!");
+        }
+      } catch (err) {
+        console.error("Fallback: Failed to copy text: ", err);
         alert("Failed to copy text!");
       }
-    );
+      document.body.removeChild(textArea);
+    }
   };
-
+  
   const handleRemoveExtraSpacesClick = () => {
     if (defaultText === text|| text ==="") {
       alert("Write something!!");
@@ -82,7 +107,7 @@ export default function TextForm(props) {
             Words: {wordCount} | Characters: {charCount}
           </div>
         </div>
-        <div className="flex flex-wrap gap-4 my-4 justify-center">
+        <div className="flex flex-wrap justify-center gap-4 my-4 ">
           <button
             onClick={handleUppercaseClick}
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,8 +134,8 @@ export default function TextForm(props) {
           </button>
           <button
             onClick={handleCopyClick}
-            className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
+            className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          > Copy text
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
